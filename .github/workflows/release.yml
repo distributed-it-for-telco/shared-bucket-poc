@@ -2,7 +2,9 @@ name: Release to GHCR
 on:
   workflow_dispatch:
   push:
-    branches: [main]
+    branches:
+      - main
+      - master
     paths:
       - "**"
       - "src/**"
@@ -68,6 +70,7 @@ jobs:
           draft: false
 
   artifact_release:
+    if: startswith(github.ref, 'refs/tags/') # Only run on tag push
     needs: build_signed_actor
     runs-on: ubuntu-latest
     steps:
