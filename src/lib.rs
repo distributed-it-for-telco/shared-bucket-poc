@@ -1,7 +1,7 @@
+use serde_json::json;
 use wasmbus_rpc::actor::prelude::*;
 use wasmcloud_interface_httpserver::{HttpRequest, HttpResponse, HttpServer, HttpServerReceiver};
 use wasmcloud_interface_keyvalue::{IncrementRequest, KeyValue, KeyValueSender};
-use serde_json::json;
 
 #[derive(Debug, Default, Actor, HealthResponder)]
 #[services(Actor, HttpServer)]
@@ -10,7 +10,6 @@ struct SharedBucketPocActor {}
 /// Implementation of HttpServer trait methods
 #[async_trait]
 impl HttpServer for SharedBucketPocActor {
-
     /// Returns a greeting, "Hello World", in the response body.
     /// If the request contains a query parameter 'name=NAME', the
     /// response is changed to "Hello NAME"
@@ -19,7 +18,7 @@ impl HttpServer for SharedBucketPocActor {
         ctx: &Context,
         req: &HttpRequest,
     ) -> std::result::Result<HttpResponse, RpcError> {
-            // make friendlier key
+        // make friendlier key
         let key = format!("counter:{}", req.path.replace('/', ":"));
 
         // bonus: use specified amount from query, or 1
@@ -40,7 +39,8 @@ impl HttpServer for SharedBucketPocActor {
             status_code,
             ..Default::default()
         };
-        Ok(resp)}
+        Ok(resp)
+    }
 }
 
 /// increment the counter by the amount, returning the new value
